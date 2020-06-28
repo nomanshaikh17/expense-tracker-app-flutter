@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './widgets/user_transactions.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -9,6 +10,12 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text("Appbar"),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {},
+            ),
+          ],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -23,6 +30,10 @@ class MyApp extends StatelessWidget {
             ),
             UserTransactions(),
           ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
         ),
       ),
     );
