@@ -1,6 +1,7 @@
 import 'package:expensetracker/widgets/new_tranaction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import './widgets/chart.dart';
 import './widgets/transactions_list.dart';
 import './models/transactions.dart';
 
@@ -17,8 +18,21 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
         accentColor: Colors.amber,
         fontFamily: 'QuickSand',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              title: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
         appBarTheme: AppBarTheme(
-          textTheme: ThemeData.light().textTheme.copyWith(),
+          textTheme: ThemeData.light().textTheme.copyWith(
+                title: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
         ),
       ),
     );
@@ -32,19 +46,31 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transactions> transaction = [
-    Transactions(
-      id: 't1',
-      title: 'fun',
-      amount: 50.5,
-      date: DateTime.now(),
-    ),
-    Transactions(
-      id: 't2',
-      title: 'fuel',
-      amount: 98.0,
-      date: DateTime.now(),
-    ),
+//    Transactions(
+//      id: 't1',
+//      title: 'fun',
+//      amount: 50.5,
+//      date: DateTime.now(),
+//    ),
+//    Transactions(
+//      id: 't2',
+//      title: 'fuel',
+//      amount: 98.0,
+//      date: DateTime.now(),
+//    ),
   ];
+
+  List<Transactions> get recentTransaction {
+    return transaction.where(
+      (tx) {
+        return tx.date.isAfter(
+          DateTime.now().subtract(
+            Duration(days: 7),
+          ),
+        );
+      },
+    ).toList();
+  }
 
   void addNewTransaction(String title, double amount) {
     final newTx = Transactions(
@@ -88,11 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           Container(
             width: double.infinity,
-            child: Card(
-              child: Text("chart"),
-              color: Colors.blue,
-              elevation: 10,
-            ),
+            child: Chart(recentTransaction),
           ),
           TransactionList(
             transaction: transaction,
