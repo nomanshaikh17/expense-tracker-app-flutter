@@ -6,10 +6,11 @@ class ChartBar extends StatelessWidget {
   final double spendingAmount;
   final double spendingpercentageTotal;
 
-  ChartBar({this.label, this.spendingAmount, this.spendingpercentageTotal});
+  ChartBar(this.label, this.spendingAmount, this.spendingpercentageTotal);
 
   @override
   Widget build(BuildContext context) {
+    print("spending amount is ${spendingAmount}");
     return Column(
       children: <Widget>[
         Text("\$${spendingAmount.toStringAsFixed(0)}"),
@@ -33,6 +34,10 @@ class ChartBar extends StatelessWidget {
               heightFactor: spendingpercentageTotal,
               child: Container(
                 decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Theme.of(context).primaryColor,
+                    width: 1.0,
+                  ),
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(10),
                 ),
