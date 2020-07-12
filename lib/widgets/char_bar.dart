@@ -13,12 +13,15 @@ class ChartBar extends StatelessWidget {
     print("spending amount is ${spendingAmount}");
     return Column(
       children: <Widget>[
-        Text("\$${spendingAmount.toStringAsFixed(0)}"),
+        FittedBox(
+          child: Text("\$${spendingAmount.toStringAsFixed(0)}"),
+        ),
         SizedBox(
           height: 4,
         ),
         Container(
           height: 60,
+          width: 10,
           child: Stack(children: <Widget>[
             Container(
               decoration: BoxDecoration(
@@ -34,10 +37,6 @@ class ChartBar extends StatelessWidget {
               heightFactor: spendingpercentageTotal,
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).primaryColor,
-                    width: 1.0,
-                  ),
                   color: Theme.of(context).primaryColor,
                   borderRadius: BorderRadius.circular(10),
                 ),
