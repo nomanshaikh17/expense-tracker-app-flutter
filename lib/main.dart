@@ -1,9 +1,8 @@
-import 'package:expensetracker/widgets/new_tranaction.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './widgets/chart.dart';
 import './widgets/transactions_list.dart';
 import './models/transactions.dart';
+import './widgets/new_tranaction.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,6 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         accentColor: Colors.amber,
+        errorColor: Colors.red,
         fontFamily: 'QuickSand',
         textTheme: ThemeData.light().textTheme.copyWith(
               title: TextStyle(
@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
+              button: TextStyle(color: Colors.white),
             ),
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
@@ -72,11 +73,11 @@ class _MyHomePageState extends State<MyHomePage> {
     ).toList();
   }
 
-  void addNewTransaction(String title, double amount) {
+  void addNewTransaction(String title, double amount, DateTime chooseDate) {
     final newTx = Transactions(
       amount: amount,
       title: title,
-      date: DateTime.now(),
+      date: chooseDate,
       id: DateTime.now().toString(),
     );
     setState(() {
@@ -95,6 +96,14 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
     );
+  }
+
+  void deleteTransaction(String id) {
+    setState(() {
+      transaction.retainWhere((tx) {
+        return tx.id == id;
+      });
+    });
   }
 
   @override
@@ -118,6 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           TransactionList(
             transaction: transaction,
+            deleteTransaction: deleteTransaction,
           )
         ],
       ),
